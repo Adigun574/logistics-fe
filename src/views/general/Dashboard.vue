@@ -11,6 +11,12 @@
     <p class="view-profile">View Profile</p>
   </div>
   <div id="mySidebar" class="sidebar">
+    <div class="sidebar-first-div">
+      <h1><i class="fa fa-user-alt user-icon"></i></h1>
+      <p>Curtis Manning</p>
+      <p><b>Referral Code: XYZ12</b></p>
+    </div>
+    <hr class="line">
     <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
     <a href="#">About</a>
     <a href="#">Services</a>
@@ -38,10 +44,10 @@
       <div class="box-row" style="margin-bottom:5px">
         <div class="single-box">
           <div class="single-inner-box single-box-inner-left">
-            <div class="box">
-              <h1><i class="fa fa-shipping-fast"></i></h1>
-              <h6><b>Ship Now</b></h6>
-              <p>Request a pickup</p>
+            <div class="box" @click="goToShipNow">
+                <h1><i class="fa fa-shipping-fast"></i></h1>
+                <h6><b>Ship Now</b></h6>
+                <p>Request a pickup</p>
             </div>
           </div>
         </div>
@@ -90,6 +96,9 @@ export default {
           closeNav() {
             document.getElementById("mySidebar").style.width = "0";
             document.getElementById("main").style.marginLeft = "0";
+          },
+          goToShipNow() {
+            this.$router.push("/shipnow")
           }
   }
 
@@ -97,7 +106,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .top-div{
   /* background-color: rgba(0,0,0,0.8); */
   background-image: linear-gradient(to bottom, rgba(0,0,0,0.5) , black);
@@ -223,16 +232,31 @@ export default {
   left: 0;
   background-color: #111; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
+  padding-top: 30px; 
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
 }
 
 /* The sidebar links */
+.sidebar-first-div{
+  color: #818181;
+  padding-left: 30px;
+}
+.user-icon{
+  color:black;
+  background-color: #818181;
+  border-radius: 50%;
+  padding:10px;
+}
+.line{
+  background-color: #818181;
+  width: 100%;
+}
 .sidebar a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;
+  /* color: white; */
   display: block;
   transition: 0.3s;
 }

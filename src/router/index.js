@@ -4,6 +4,7 @@ import Landing from '../views/Landing.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Dashboard from '../views/general/Dashboard.vue'
+import ShipNow from '../views/general/ShipNow.vue'
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path:'/dashboard',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path:'/shipnow',
+    name: 'Shipnow',
+    component: ShipNow
   }
   // {
   //   path: '/',

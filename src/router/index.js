@@ -5,6 +5,9 @@ import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Dashboard from '../views/general/Dashboard.vue'
 import ShipNow from '../views/general/ShipNow.vue'
+import Transactions from '../views/transactions/Transactions.vue'
+import Payment from '../views/payment/Payment.vue'
+import Order from '../views/order/Order.vue'
 
 const routes = [
   {
@@ -31,6 +34,21 @@ const routes = [
     path:'/shipnow',
     name: 'Shipnow',
     component: ShipNow
+  },
+  {
+    path:'/transactions',
+    name: 'Transactions',
+    component: Transactions
+  },
+  {
+    path:'/payment',
+    name: 'Payment',
+    component: Payment
+  },
+  {
+    path:'/order-details',
+    name: 'OrderDetails',
+    component: Order
   }
   // {
   //   path: '/',

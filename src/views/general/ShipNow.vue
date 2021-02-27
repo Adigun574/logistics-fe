@@ -10,7 +10,7 @@
     
 
     <div class="boxes">
-        <div class="single-box">
+        <div class="single-box" @click="goToOrderDetails">
             <div class="vehicle-div">
                 <h1><i class="fa fa-motorcycle"></i></h1>
             </div>
@@ -21,7 +21,7 @@
                 </p>
             </div>
         </div>
-        <div class="single-box">
+        <div class="single-box" @click="goToOrderDetails">
             <div class="vehicle-div">
                 <h1><i class="fa fa-car"></i></h1>
             </div>
@@ -32,7 +32,7 @@
                 </p>
             </div>
         </div>
-        <div class="single-box">
+        <div class="single-box" @click="goToOrderDetails">
             <div class="vehicle-div">
                 <h1><i class="fa fa-truck"></i></h1>
             </div>
@@ -43,7 +43,7 @@
                 </p>
             </div>
         </div>
-        <div class="single-box">
+        <div class="single-box" @click="goToOrderDetails">
             <div class="vehicle-div">
                 <h1><i class="fa fa-truck"></i></h1>
             </div>
@@ -64,6 +64,9 @@ export default {
     methods: {
         goToDashboard() {
             this.$router.push("/dashboard")
+        },
+        goToOrderDetails() {
+            this.$router.push("/order-details")
         }
     }
 

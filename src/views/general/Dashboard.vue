@@ -36,7 +36,7 @@
         </div>
       </div>
       <div>
-        <p class="fund">Fund Wallet</p>
+        <p class="fund" data-toggle="modal" data-target="#exampleModalCenter">Fund Wallet</p>
       </div>
     </div>
 
@@ -64,7 +64,7 @@
       <div class="box-row">
         <div class="single-box">
          <div class="single-inner-box single-box-inner-left">
-            <div class="box">
+            <div class="box" @click="goToTransactions">
               <h1><i class="fa fa-wallet"></i></h1>
               <h6><b>Transactions</b></h6>
               <p>Customer dashboard</p>
@@ -84,10 +84,32 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="fund-modal">
+        <h5><b>FUND WALLET</b></h5>
+        <input type="number" class="fund-input" placeholder="Enter amount" v-model="fundAmount">
+        <div class="fund-wallet-footer">
+          <h5 @click="dismissModal"><b>CANCEL</b></h5>
+          <h5 @click="fundWallet"><b>FUND</b></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
+
 export default {
+  data(){
+    return {
+      fundAmount:null
+    }
+  },
   methods:{
           openNav() {
             document.getElementById("mySidebar").style.width = "250px";
@@ -99,6 +121,24 @@ export default {
           },
           goToShipNow() {
             this.$router.push("/shipnow")
+          },
+          goToTransactions() {
+            this.$router.push("/transactions")
+          },
+          dismissModal() {
+            document.querySelector('#exampleModalCenter').style.display = 'none'
+            document.querySelector('.modal-backdrop').style.display = 'none'
+          },
+          fundWallet() {
+            if(!this.fundAmount){
+              this.$toast.error('Enter a valid amount')
+              return
+            }
+            else{
+              document.querySelector('#exampleModalCenter').style.display = 'none'
+              document.querySelector('.modal-backdrop').style.display = 'none'
+              this.$router.push("/payment")
+            }
           }
   }
 
@@ -304,6 +344,22 @@ export default {
 @media screen and (max-height: 450px) {
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}
+}
+
+/*FUND WALLET MODAL*/
+.fund-modal{
+  padding:40px;
+}
+.fund-input{
+  border:none;
+  border-bottom: 1px solid black;
+  width:100%;
+  margin-top: 30px;
+}
+.fund-wallet-footer{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
 }
 
 

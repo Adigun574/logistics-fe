@@ -8,6 +8,10 @@ import ShipNow from '../views/general/ShipNow.vue'
 import Transactions from '../views/transactions/Transactions.vue'
 import Payment from '../views/payment/Payment.vue'
 import Order from '../views/order/Order.vue'
+import QuickQuote from '../views/general/QuickQuote.vue'
+import Help from '../views/general/Help.vue'
+import Profile from '../views/general/Profile.vue'
+import ResetPassword from '../views/general/ResetPassword.vue'
 
 const routes = [
   {
@@ -49,6 +53,26 @@ const routes = [
     path:'/order-details',
     name: 'OrderDetails',
     component: Order
+  },
+  {
+    path:'/quick-quote',
+    name: 'QuickQuote',
+    component: QuickQuote
+  },
+  {
+    path:'/help',
+    name: 'Help',
+    component: Help
+  },
+  {
+    path:'/profile',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+    path:'/reset-password',
+    name: 'ResetPassword',
+    component: ResetPassword
   }
   // {
   //   path: '/',

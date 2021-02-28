@@ -5,23 +5,24 @@
     <h3>GIG</h3>
     <h5 class="hello">Hello, Curtis</h5>
     <div class="input-track-div">
-      <input type="text" placeholder="Waybill Number">
+      <input type="text" placeholder="Waybill Number" class="pl-2">
       <p>TRACK</p>
     </div>
-    <p class="view-profile">View Profile</p>
+    <p class="view-profile" @click="goToProfile">View Profile</p>
   </div>
   <div id="mySidebar" class="sidebar">
-    <div class="sidebar-first-div">
+    <div class="sidebar-first-div" @click="goToProfile">
       <h1><i class="fa fa-user-alt user-icon"></i></h1>
       <p>Curtis Manning</p>
       <p><b>Referral Code: XYZ12</b></p>
     </div>
     <hr class="line">
     <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
+    <router-link to="quick-quote">Quick Quote</router-link>
+    <router-link to="help">Help and support</router-link>
+    <router-link to="profile">Profile</router-link>
+    <h6 class="sidebar-nav">Logout</h6>
+    <!-- <a href="#">Services</a> -->
   </div>
 
 <div id="main" @click="closeNav">
@@ -124,6 +125,9 @@ export default {
           },
           goToTransactions() {
             this.$router.push("/transactions")
+          },
+          goToProfile() {
+            this.$router.push("/profile")
           },
           dismissModal() {
             document.querySelector('#exampleModalCenter').style.display = 'none'
@@ -291,10 +295,11 @@ export default {
   background-color: #818181;
   width: 100%;
 }
-.sidebar a {
+.sidebar a, .sidebar-nav {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
+  /* font-size: 25px; */
+  font-size: 18px;
   color: #818181;
   /* color: white; */
   display: block;

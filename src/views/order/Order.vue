@@ -36,6 +36,23 @@
         </div>
       </div>
   </div>
+  <div class="sender-div">
+      <p><b>Package Info:</b></p>
+      <div class="wrap">
+        <div class="email-div">
+            <label for="weight" class="text-muted">Weight (Kg)</label>
+            <input id="weight" type="text" class="cool">
+        </div>
+        <div class="email-div">
+            <label for="length" class="text-muted">Length (inch)</label>
+            <input id="length" type="text" class="cool">
+        </div>
+        <div class="email-div">
+            <label for="width" class="text-muted">Width (inch)</label>
+            <input id="width" type="number" class="cool">
+        </div>
+      </div>
+  </div>
   <p class="continue"><b>CONTINUE</b></p>
 </template>
 

@@ -1,21 +1,23 @@
 <template>
   <FullScreenLoader v-if="showLoader"/>
-  <div class="login-form-body">
-    <div class="wrap cente">
-        <div class="email-div">
-            <label for="fname" class="text-muted">email</label>
-            <input id="fname" type="email" class="cool" v-model="email" @input="validateEmail">
-        </div>
-        <div class="password-div">
-            <label for="password" class="text-muted">password</label>
-            <input id="password" type="password" class="cool" v-model="password" @input="validatePassword">
-        </div>
-        <p class="login" @click="login">Login</p>
-        <div class="bottom-text">
-          <p class="forgot">Forgot password</p>
-          <p class="dont">Don't have an account? <span class="sign"><router-link to="/signup">Sign up</router-link></span></p>
-        </div>
-    </div>      
+  <div style="display:flex; align-item:center; height:100vh">
+    <div class="login-form-body">
+      <div class="wrap cente">
+          <div class="password-div">
+              <label for="fname" class="text-muted">email</label>
+              <input id="fname" type="email" class="cool" v-model="email" @input="validateEmail">
+          </div>
+          <div class="password-div">
+              <label for="password" class="text-muted">password</label>
+              <input id="password" type="password" class="cool" v-model="password" @input="validatePassword">
+          </div>
+          <p class="login" @click="login">Login</p>
+          <div class="bottom-text">
+            <p class="forgot">Forgot password</p>
+            <p class="dont">Don't have an account? <span class="sign"><router-link to="/signup">Sign up</router-link></span></p>
+          </div>
+      </div>      
+    </div>
   </div>
 </template>
 
@@ -81,6 +83,8 @@ export default {
             }
             else{
               this.$toast.success('Login successful')
+              localStorage.setItem("giglogisticsuser",JSON.stringify(data.message))
+              this.$store.dispatch('setUserDetailsAction',data.message)
               this.$router.push('/dashboard')
             }
             this.showLoader = false
@@ -162,6 +166,8 @@ div.wrap div {
   .login-form-body{
       width:80%;
       margin: auto;
+      /* display: flex;
+      justify-content: center; */
   }
   .login{
     color:white;

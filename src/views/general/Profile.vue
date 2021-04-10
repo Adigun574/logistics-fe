@@ -13,20 +13,16 @@
       <p><b><span class="mr-2">Referral code:</span><span class="mr-2">xyz12</span><span><i class="fa fa-exclamation-circle exclamation-icon"></i></span></b></p>
       <div class="wrap">
         <div class="email-div">
-            <label for="fname" class="text-muted">First Name</label>
-            <input id="fname" type="text" class="cool">
-        </div>
-        <div class="email-div">
-            <label for="lname" class="text-muted">Last Name</label>
-            <input id="lname" type="text" class="cool">
+            <label for="fname" class="text-muted">Name</label>
+            <input id="fname" type="text" class="cool" v-model="name" disabled>
         </div>
         <div class="email-div">
             <label for="email" class="text-muted">Email Address</label>
-            <input id="email" type="text" class="cool">
+            <input id="email" type="text" class="cool" v-model="email" disabled>
         </div>
         <div class="email-div">
             <label for="phone" class="text-muted">Phone No</label>
-            <input id="phone" type="text" class="cool">
+            <input id="phone" type="text" class="cool" v-model="phone" disabled>
         </div>
       </div>
   </div>
@@ -39,12 +35,33 @@ import $ from 'jquery'
 
 
 export default {
+    data(){
+        return {
+            name:'',
+            email:'',
+            phone:''
+        }
+    },
     methods:{
         goToDashboard(){
             this.$router.push("/dashboard")
+        },
+        handleInputFieldAnimations(){
+            //HANDLE INPUT FIELD ANIMATION IF VALUE EXISTS
+            $('#fname').parent().find('label').addClass('active');
+            $('#email').parent().find('label').addClass('active');
+            $('#phone').parent().find('label').addClass('active');
         }
     },
     mounted() {
+        //GET CURRENT USERS DETAILS
+        this.currentUser = JSON.parse(localStorage.getItem("giglogisticsuser"))
+        //AUTO POPULATE USER'S FIELDS
+        this.name = this.currentUser.name
+        this.email = this.currentUser.email
+        this.phone = this.currentUser.phone
+        this.handleInputFieldAnimations()
+
         $('input').on('focusin', function() {
         $(this).parent().find('label').addClass('active');
         });

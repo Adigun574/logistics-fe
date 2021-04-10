@@ -7,11 +7,11 @@
       </div>
     <div class="wrap cente">
         <div class="email-div">
-            <label for="fname" class="text-muted">Name</label>
+            <label for="fname" class="text-muted">Name*</label>
             <input id="fname" type="text" class="cool" v-model="name">
         </div>
         <div class="password-div">
-            <label for="password" class="text-muted">Email address</label>
+            <label for="password" class="text-muted">Email address*</label>
             <input type="email" class="cool" v-model="email">
         </div>
         <div class="phone-div">
@@ -19,16 +19,16 @@
                 <p><span>&#127475;&#127468;</span> +234 <i class="fa fa-caret-down"></i></p>
             </div>
             <div class="password-div" style="flex:1">
-                <label for="password" class="text-muted">Phone no</label>
+                <label for="password" class="text-muted">Phone no*</label>
                 <input type="number" class="cool" v-model="phone">
             </div>
         </div>
         <div class="password-div">
-            <label for="password" class="text-muted">Password (min of six characters)</label>
+            <label for="password" class="text-muted">Password (min of six characters)*</label>
             <input type="password" class="cool" v-model="password">
         </div>
         <div class="password-div">
-            <label for="password" class="text-muted">Re-enter Password</label>
+            <label for="password" class="text-muted">Re-enter Password*</label>
             <input type="password" class="cool" v-model="repassword">
         </div>
         <div class="password-div">
@@ -44,7 +44,7 @@
 <script>
 import $ from 'jquery'
 import FullScreenLoader from '../components/FullScreenLoader'
-// import { baseUrl } from '../utils/var';
+import { baseUrl } from '../utils/var';
 
 export default {
     components:{FullScreenLoader},
@@ -75,57 +75,56 @@ export default {
     },
     methods:{
         signup(){
-            this.showLoader = true
-            // let obj = {
-            //     name:this.name,
-            //     password:this.password,
-            //     email:this.email,
-            //     phone:this.phone,
-            //     repassword:this.repassword,
-            //     address:"",
-            //     referral_code:this.referralcode,
-            // }
-            // if(obj.name == "" || obj.password == "" || obj.email == "" || obj.phone == "" || obj.repassword == ""){
-            //     this.$toast.error('All fields are required!')
-            // }
-            // else{
-            //     if(obj.password.length<6){
-            //         this.$toast.error('Passwords must be at least six characters long!')
-            //     }
-            //     else{
-            //         if(obj.password != obj.repassword){
-            //             this.$toast.error('Passwords must match!')
-            //         }
-            //         else{
-            //             this.showLoader = true
-            //             console.log(obj)
-            //             fetch(`${baseUrl}/users/register`, {
-            //                 method: 'POST',
-            //                 headers: {
-            //                 'Content-Type': 'application/json',
-            //                 },
-            //                 body: JSON.stringify(obj),
-            //             })
-            //             .then(response => response.json())
-            //             .then(data => {
-            //                 console.log(data);
-            //                 if(!data.success){
-            //                 this.$toast.error(data.message)
-            //                 }
-            //                 else{
-            //                 this.$toast.success('Resgistration successful')
-            //                 this.$router.push('/dashboard')
-            //                 }
-            //                 this.showLoader = false
-            //             })
-            //             .catch((error) => {
-            //                 console.error(error);
-            //                 this.showLoader = false
-            //                 this.$toast.error('Registration failed')
-            //             });
-            //         }
-            //     }
-            // }
+            let obj = {
+                name:this.name,
+                password:this.password,
+                email:this.email,
+                phone:this.phone,
+                repassword:this.repassword,
+                address:"",
+                referral_code:this.referralcode,
+            }
+            if(obj.name == "" || obj.password == "" || obj.email == "" || obj.phone == "" || obj.repassword == ""){
+                this.$toast.error('All fields marked * are required!')
+            }
+            else{
+                if(obj.password.length<6){
+                    this.$toast.error('Passwords must be at least six characters long!')
+                }
+                else{
+                    if(obj.password != obj.repassword){
+                        this.$toast.error('Passwords must match!')
+                    }
+                    else{
+                        this.showLoader = true
+                        fetch(`${baseUrl}/users/register`, {
+                            method: 'POST',
+                            headers: {
+                            'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(obj),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // console.log(data);
+                            if(!data.success){
+                                this.$toast.error(data.message)
+                            }
+                            else{
+                                localStorage.setItem("giglogisticsuser",JSON.stringify(data.message))
+                                this.$toast.success('Resgistration successful')
+                                this.$router.push('/dashboard')
+                            }
+                            this.showLoader = false
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                            this.showLoader = false
+                            this.$toast.error('Registration failed')
+                        });
+                    }
+                }
+            }
         }
     }
 
@@ -177,6 +176,7 @@ div.wrap div {
   .signup-form-body{
       width:80%;
       margin: auto;
+      margin-top: 30px;
   }
   .login{
     color:white;

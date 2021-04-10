@@ -95,7 +95,7 @@ body {
 	position: relative;
 	width: 120px;
 	height: 120px;
-	margin-left: 75px;
+	/* margin-left: 75px; */
 }
 
 .loader span {

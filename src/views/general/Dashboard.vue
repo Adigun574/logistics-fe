@@ -3,7 +3,7 @@
   <h3 class="openhamburger nav-btn" @click="openNav">&#9776;</h3>
   <div class="top-div" @click="closeNav">
     <h3>GIG</h3>
-    <h5 class="hello">Hello, Curtis</h5>
+    <h5 class="hello">Hello, <span style="text-transform:capitalize">{{userDisplayName}}</span></h5>
     <div class="input-track-div">
       <input type="text" placeholder="Waybill Number" class="pl-2">
       <p>TRACK</p>
@@ -21,7 +21,7 @@
     <router-link to="quick-quote">Quick Quote</router-link>
     <router-link to="help">Help and support</router-link>
     <router-link to="profile">Profile</router-link>
-    <h6 class="sidebar-nav">Logout</h6>
+    <h6 class="sidebar-nav" @click="logout">Logout</h6>
     <!-- <a href="#">Services</a> -->
   </div>
 
@@ -108,10 +108,19 @@
 export default {
   data(){
     return {
-      fundAmount:null
+      fundAmount:null,
+      userDetails:null,
+      nameLength:0
     }
   },
+  created() {
+    this.getUserDetails()
+  },
   methods:{
+          getUserDetails() {
+            this.userDetails = JSON.parse(localStorage.getItem("giglogisticsuser"))
+            this.userDisplayName = this.userDetails.name.split(' ')[0]
+          },
           openNav() {
             document.getElementById("mySidebar").style.width = "250px";
             document.getElementById("main").style.marginLeft = "250px";
@@ -143,6 +152,10 @@ export default {
               document.querySelector('.modal-backdrop').style.display = 'none'
               this.$router.push("/payment")
             }
+          },
+          logout() {
+            localStorage.removeItem("giglogisticsuser")
+            this.$router.push("/")
           }
   }
 

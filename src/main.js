@@ -4,10 +4,20 @@ import router from './router'
 
 import Toaster from '@meforma/vue-toaster';
 
+import store from './store/store'
 
 
 
-createApp(App).use(router).use(Toaster).mount('#app')
-// createApp(App).use(router).mount('#app')
+// createApp(App).use(router).use(Toaster).use(store).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.use(Toaster)
+app.use(store)
+
+
+app.mount('#app')
+
+
+
 
 

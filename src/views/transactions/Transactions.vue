@@ -4,49 +4,59 @@
   </div>
   <div class="top-box">
       <div>
-          <p>Order</p>
-          <h6><b>0</b></h6>
+          <p>Order(s)</p>
+          <h6><b>{{numberOfOrders}}</b></h6>
       </div>
       <div style="width:1px; border:1px solid white; height:50px">
 
       </div>
       <div>
           <p>Total Balance</p>
-          <h6><b>₦0</b></h6>
+          <h6><b>₦{{walletBalance}}</b></h6>
           <p class="fund" data-toggle="modal" data-target="#exampleModalCenter">Fund Wallet</p>
       </div>
   </div>
-  <div class="date-search">
+  <!-- <div class="date-search">
       <p>Search by date</p>
       <p><i class="fa fa-calendar"></i></p>
-  </div>
+  </div> -->
   <TransactionsTab />
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        <div class="fund-modal">
-            <h5><b>FUND WALLET</b></h5>
-            <input type="number" class="fund-input" placeholder="Enter amount" v-model="fundAmount">
-            <div class="fund-wallet-footer">
-            <h5 @click="dismissModal"><b>CANCEL</b></h5>
-            <h5 @click="fundWallet"><b>FUND</b></h5>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="fund-modal">
+                <h5><b>FUND WALLET</b></h5>
+                <input type="number" class="fund-input" placeholder="Enter amount" v-model="fundAmount">
+                <div class="fund-wallet-footer">
+                <h5 @click="dismissModal"><b>CANCEL</b></h5>
+                <h5 @click="fundWallet"><b>FUND</b></h5>
+                </div>
+            </div>
             </div>
         </div>
-        </div>
-    </div>
     </div>
 </template>
 
 <script>
+import { baseUrl } from '../../utils/var'
 import TransactionsTab from './TransactionsTab.vue'
+
 export default {
     data(){
         return {
-        fundAmount:null
+            // currentUser:null,
+            fundAmount:null,
+            walletBalance:0,
+            numberOfOrders:0
         }
     },
     components:{TransactionsTab},
+    created(){
+        this.currentUser = JSON.parse(localStorage.getItem("giglogisticsuser"))
+        this.getWalletBalance()
+        this.getOrdersByUserID()
+    },
     methods:{
         goToDashboard(){
             this.$router.push("/dashboard")
@@ -54,6 +64,29 @@ export default {
         dismissModal() {
             document.querySelector('#exampleModalCenter').style.display = 'none'
             document.querySelector('.modal-backdrop').style.display = 'none'
+        },
+        getOrdersByUserID(){
+            fetch(`${baseUrl}/orders/getordersbyuserid/${this.currentUser.id}`)
+            .then(res=>res.json())
+            .then(data=>{
+                if(typeof data?.message == 'object' && data?.message.length > 0){
+                    this.numberOfOrders = data?.message.length
+                }
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        },
+        getWalletBalance(){
+            fetch(`${baseUrl}/payments/getuserwalletbalance/${this.currentUser.id}`)
+            .then(res=>res.json())
+            .then(data=>{
+                // console.log(data)
+                this.walletBalance = data.message?.balance
+            })
+            .catch(err=>{
+                console.log(err)
+            })
         },
         fundWallet() {
             if(!this.fundAmount){
@@ -63,6 +96,7 @@ export default {
             else{
               document.querySelector('#exampleModalCenter').style.display = 'none'
               document.querySelector('.modal-backdrop').style.display = 'none'
+              localStorage.setItem('giguserwalletamount',this.fundAmount)
               this.$router.push("/payment")
             }
         }

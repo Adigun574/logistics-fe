@@ -33,7 +33,7 @@
         <p>Wallet Balance</p>
         <div>
           <h3><i class="fa fa-wallet"></i></h3>
-          <h5>₦0</h5>
+          <h5>₦{{walletBalance}}</h5>
         </div>
       </div>
       <div>
@@ -54,7 +54,7 @@
         </div>
         <div class="single-box">
           <div class="single-inner-box single-box-inner-right">
-            <div class="box">
+            <div class="box" @click="xpressDropOff">
               <h1><i class="fa fa-truck"></i></h1>
               <h6><b>Xpress Drop-off</b></h6>
               <p>Fast track shipment drop-off</p>
@@ -74,7 +74,7 @@
         </div>
         <div class="single-box">
           <div class="single-inner-box single-box-inner-right">
-            <div class="box">
+            <div class="box" @click="xpressDropOff">
               <h1><i class="fa fa-plane"></i></h1>
               <h6><b>Oversea Shipping</b></h6>
               <p>Ship from USA to Nigeria</p>
@@ -104,22 +104,37 @@
 </template>
 
 <script>
+import { baseUrl } from '../../utils/var'
+
 
 export default {
   data(){
     return {
       fundAmount:null,
       userDetails:null,
-      nameLength:0
+      nameLength:0,
+      walletBalance:0
     }
   },
   created() {
     this.getUserDetails()
+    this.getWalletBalance()
   },
   methods:{
           getUserDetails() {
             this.userDetails = JSON.parse(localStorage.getItem("giglogisticsuser"))
             this.userDisplayName = this.userDetails.name.split(' ')[0]
+          },
+          getWalletBalance(){
+            fetch(`${baseUrl}/payments/getuserwalletbalance/${this.userDetails.id}`)
+            .then(res=>res.json())
+            .then(data=>{
+              console.log(data)
+              this.walletBalance = data.message?.balance
+            })
+            .catch(err=>{
+              console.log(err)
+            })
           },
           openNav() {
             document.getElementById("mySidebar").style.width = "250px";
@@ -150,8 +165,12 @@ export default {
             else{
               document.querySelector('#exampleModalCenter').style.display = 'none'
               document.querySelector('.modal-backdrop').style.display = 'none'
+              localStorage.setItem('giguserwalletamount',this.fundAmount)
               this.$router.push("/payment")
             }
+          },
+          xpressDropOff(){
+            this.$toast.error('This feature is not yet available')
           },
           logout() {
             localStorage.removeItem("giglogisticsuser")

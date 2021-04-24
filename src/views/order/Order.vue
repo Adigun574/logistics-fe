@@ -156,7 +156,8 @@ export default {
                 this.$toast.error('All fields are required!')
             }
             else{
-                this.orderPrice = Math.floor(Math.random() * 10000)
+                // this.orderPrice = Math.floor(Math.random() * 10000)
+                this.orderPrice = Math.floor(Math.random() * 1000)
                 this.order.price = this.orderPrice
                 document.querySelector('.modal-open-btn').click()
             }
